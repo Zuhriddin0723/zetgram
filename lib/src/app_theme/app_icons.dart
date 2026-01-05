@@ -1,0 +1,29 @@
+class AppIcons{
+  static const active_bell = "assets/icons/active_bell.png";
+  static const active_favorite = "assets/icons/active_favorite.png";
+  static const active_mail = "assets/icons/active_mail.png";
+  static const add = "assets/icons/add.png";
+  static const bell = "assets/icons/bell.png";
+  static const camera = "assets/icons/camera.png";
+  static const check = "assets/icons/check.png";
+  static const check_ = "assets/icons/check_.png";
+  static const close_eye = "assets/icons/close_eye.png";
+  static const favorite = "assets/icons/favorite.png";
+  static const home = "assets/icons/home.png";
+  static const left = "assets/icons/left.png";
+  static const mail = "assets/icons/mail.png";
+  static const map = "assets/icons/map.png";
+  static const message = "assets/icons/message.png";
+  static const open_eye = "assets/icons/open_eye.png";
+  static const right = "assets/icons/right.png";
+  static const search = "assets/icons/search.png";
+  static const send = "assets/icons/send.png";
+  static const setting = "assets/icons/settings.png";
+  static const smile = "assets/icons/smile.png";
+  static const trash = "assets/icons/trash.png";
+  static const user = "assets/icons/user.png";
+  static const vertical_dot = "assets/icons/vertical_dot.png";
+  static const x = "assets/icons/x.png";
+  static const x_ = "assets/icons/x_.png";
+  static const google = "assets/icons/google.png";
+}
