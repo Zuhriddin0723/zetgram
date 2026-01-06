@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:zetgram/src/app_theme/app_images.dart';
+import 'package:zetgram/src/ui/auth/reset_pw.dart';
 import 'package:zetgram/src/widget/button_widget.dart';
 
 import '../../app_theme/app_style.dart';
@@ -228,7 +229,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => Column(),
+                  builder: (BuildContext context) => ResetPw(),
                 ),
               );
             },

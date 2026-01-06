@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:zetgram/src/app_theme/app_icons.dart';
 import 'package:zetgram/src/app_theme/app_style.dart';
 import 'package:zetgram/src/ui/auth/forgot_password.dart';
+import 'package:zetgram/src/ui/main/home_screen.dart';
 import 'package:zetgram/src/widget/button_widget.dart';
 import 'package:zetgram/src/widget/text_field_widget.dart';
 
@@ -57,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Gap(60.h),
+            Gap(80.h),
             Center(child: Image.asset(AppImages.logo2)),
             Gap(30),
             Row(
@@ -173,7 +174,36 @@ class _LoginScreenState extends State<LoginScreen>
                         ],
                       ),
                       Gap(20.w),
-                      ButtonWidget(onTap: () {}, buttonText: "Login"),
+                      ButtonWidget(onTap: () {
+                        if(controllerPassword.text.isEmpty|| controllerPassword.text.isEmpty){
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (_) => _buildErrorSheet(
+                              title: "Fill all the place",
+                              message: "Please fill all required fields",
+                            ),
+                          );
+                          return;
+                        }if (controllerPassword.text.length < 8) {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (_) => _buildErrorSheet(
+                              title: "Login Faild",
+                              message:
+                              "Password must be at least 8 characters long and contain at least 1 number.",
+                            ),
+                          );
+                          return;
+                        }
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (ctx) => HomeScreen()),
+                                (route) => false,
+                          );
+                        controllerPassword.clear();
+                        controllerEmail.clear();
+
+                      }, buttonText: "Login"),
                       Gap(30.w),
                       Padding(
                         padding: const EdgeInsets.only(left: 20, right: 20),
@@ -265,7 +295,46 @@ class _LoginScreenState extends State<LoginScreen>
                         obscureText: true,
                       ),
                       Gap(40.w),
-                      ButtonWidget(onTap: () {}, buttonText: "Sign Up"),
+                      ButtonWidget(
+                        onTap: () {
+                          // 1️⃣ Bo‘sh fieldlar
+                          if (_controllerEmail.text.isEmpty ||
+                              _controllerName.text.isEmpty ||
+                              _controllerPw.text.isEmpty) {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (_) => _buildErrorSheet(
+                                title: "Fill all the place",
+                                message: "Please fill all required fields",
+                              ),
+                            );
+                            return; // MUHIM
+                          }
+
+                          // 2️⃣ Password kuchsizmi?
+                          if (_controllerPw.text.length < 8) {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (_) => _buildErrorSheet(
+                                title: "Password too weak",
+                                message:
+                                "Password must be at least 8 characters long and contain at least 1 number.",
+                              ),
+                            );
+                            return;
+                          }
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (ctx) => HomeScreen()),
+                                (route) => false,
+                          );
+                          _controllerEmail.clear();
+                          _controllerName.clear();
+                          _controllerPw.clear();
+                        },
+                        buttonText: "Sign Up",
+                      ),
+
                     ],
                   ),
                 ],
@@ -276,4 +345,54 @@ class _LoginScreenState extends State<LoginScreen>
       ),
     );
   }
+  Widget _buildErrorSheet({required String title, String? message}) {
+    return Container(
+      width: MediaQuery.of(context).size.width, // full width
+      padding: EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 150,
+            height: 2,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(2),
+              color: Colors.grey
+            ),
+          ),
+          Gap(30.w),
+          Image.asset(
+            AppIcons.failed, // error icon
+            height: 100,
+            color: Colors.red,
+          ),
+          Gap(30.w),
+          Text(
+            title,
+            style: AppStyle.agBoldH2(color: Colors.black),
+            textAlign: TextAlign.center,
+          ),
+          if (message != null) ...[
+            Gap(20.w),
+            Text(
+              message,
+              style: AppStyle.agRegularLabel(color: Colors.grey.shade600),
+              textAlign: TextAlign.center,
+            ),
+          ],
+          Gap(50.w),
+          ButtonWidget(
+            onTap: () => Navigator.pop(context),
+            buttonText: "Sign Up",
+          ),
+          Gap(30.w)
+        ],
+      ),
+    );
+  }
+
 }

@@ -1,5 +1,6 @@
 class AppIcons{
   static const active_bell = "assets/icons/active_bell.png";
+  static const failed = "assets/icons/failed.png";
   static const active_favorite = "assets/icons/active_favorite.png";
   static const active_mail = "assets/icons/active_mail.png";
   static const add = "assets/icons/add.png";

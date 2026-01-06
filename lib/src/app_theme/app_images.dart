@@ -19,4 +19,8 @@ class AppImages{
   static const twelve = "assets/images/12.png";
   static const one_ = "assets/images/_1.png";
   static const two_ = "assets/images/_2.png";
+  static const story1 = "assets/images/story1.png";
+  static const story2 = "assets/images/story2.png";
+  static const story3 = "assets/images/story3.png";
+  static const story4 = "assets/images/story4.png";
 }
