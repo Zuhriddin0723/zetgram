@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:zetgram/src/app_theme/app_icons.dart';
 import 'package:zetgram/src/app_theme/app_style.dart';
 import 'package:zetgram/src/ui/auth/forgot_password.dart';
-import 'package:zetgram/src/ui/main/home_screen.dart';
+import 'package:zetgram/src/ui/main/main_screen.dart';
 import 'package:zetgram/src/widget/button_widget.dart';
 import 'package:zetgram/src/widget/text_field_widget.dart';
 
@@ -195,11 +194,11 @@ class _LoginScreenState extends State<LoginScreen>
                           );
                           return;
                         }
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (ctx) => HomeScreen()),
-                                (route) => false,
-                          );
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (ctx) => MainScreen()),
+                              (route) => false,
+                        );
                         controllerPassword.clear();
                         controllerEmail.clear();
 
@@ -325,7 +324,7 @@ class _LoginScreenState extends State<LoginScreen>
                           }
                           Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (ctx) => HomeScreen()),
+                            MaterialPageRoute(builder: (ctx) => MainScreen()),
                                 (route) => false,
                           );
                           _controllerEmail.clear();
@@ -345,6 +344,7 @@ class _LoginScreenState extends State<LoginScreen>
       ),
     );
   }
+
   Widget _buildErrorSheet({required String title, String? message}) {
     return Container(
       width: MediaQuery.of(context).size.width, // full width
@@ -360,8 +360,8 @@ class _LoginScreenState extends State<LoginScreen>
             width: 150,
             height: 2,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2),
-              color: Colors.grey
+                borderRadius: BorderRadius.circular(2),
+                color: Colors.grey
             ),
           ),
           Gap(30.w),

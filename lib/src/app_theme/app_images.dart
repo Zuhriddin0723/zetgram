@@ -23,4 +23,13 @@ class AppImages{
   static const story2 = "assets/images/story2.png";
   static const story3 = "assets/images/story3.png";
   static const story4 = "assets/images/story4.png";
+  static const vid1 = "assets/images/vid1.png";
+  static const vid2 = "assets/images/vid2.png";
+  static const history1 = "assets/images/history1.png";
+  static const history2 = "assets/images/history2.png";
+  static const chat_image1 = "assets/images/chat_img1.png";
+  static const chat_image2 = "assets/images/chat_img2.png";
+  static const chat_image3 = "assets/images/chat_img3.png";
+  static const profile = "assets/images/profile_.png";
+  static const img = "assets/images/img.png";
 }
