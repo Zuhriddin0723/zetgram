@@ -14,12 +14,9 @@ class ContactBlocPost {
 
   Future<void> getAllPost() async {
     final data = await repositoryPost.getAllPost();
-    _chatSubject.sink.add(data); // 🔥 MUHIM
+    _chatSubject.sink.add(data);
   }
 
-  void dispose() {
-    _chatSubject.close(); // ✅ TO‘G‘RI
-  }
 }
 
 final contactBlocPost = ContactBlocPost();

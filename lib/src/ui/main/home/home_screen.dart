@@ -187,7 +187,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
 
                 final data = snapshot.data!;
-
                 return ListView.builder(
                   itemCount: data.length,
                   itemBuilder: (context, index) {
@@ -249,16 +248,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               const SizedBox(height: 10),
 
                               // IMAGE
-                              if (post.image.isNotEmpty)
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Image.file(
-                                    File(post.image),
-                                    height: 200,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                  ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image.file(
+                                  File(post.image),
+                                  height: 200,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
                                 ),
+                              ),
 
                               const SizedBox(height: 10),
 
@@ -287,157 +285,121 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Text(post.like.toString()),
                                   const SizedBox(width: 10),
                                   IconButton(
-                                    onPressed: () {
+                                    onPressed: () async {
                                       showModalBottomSheet(
                                         context: context,
                                         isScrollControlled: true,
                                         builder: (_) {
-                                          return DraggableScrollableSheet(
-                                            expand: false,
-                                            builder: (context, scrollController) {
-                                              return Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.vertical(
-                                                        top: Radius.circular(
-                                                          20,
-                                                        ),
-                                                      ),
-                                                  color: Colors.grey.shade100,
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                    20,
-                                                  ),
-                                                  child: Column(
-                                                    children: [
-                                                      SizedBox(height: 10),
-                                                      Container(
-                                                        width: 50,
-                                                        height: 5,
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.grey,
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                10,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Expanded(
-                                                        child: StreamBuilder<List<CommentModel>>(
-                                                          stream:
-                                                              contactBlocComment
-                                                                  .stream,
-                                                          builder: (context, snapshot) {
-                                                            if (!snapshot
-                                                                    .hasData ||
-                                                                snapshot
-                                                                    .data!
-                                                                    .isEmpty) {
-                                                              return const Center(
-                                                                child: Text(
-                                                                  "No comments yet",
-                                                                ),
-                                                              );
-                                                            }
-                                                            final comments =
-                                                                snapshot.data!;
-                                                            return ListView.builder(
-                                                              controller:
-                                                                  scrollController,
-                                                              // important
-                                                              itemCount:
-                                                                  comments
-                                                                      .length,
-                                                              itemBuilder: (context, index) {
-                                                                final c =
-                                                                    comments[index];
-                                                                return ListTile(
-                                                                  leading: CircleAvatar(
-                                                                    backgroundImage:
-                                                                        AssetImage(
-                                                                          AppImages
-                                                                              .profile,
-                                                                        ),
-                                                                  ),
-                                                                  title: Text(
-                                                                    "Wendy Edwards",
-                                                                    style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
+                                          return Padding(
+                                            padding: EdgeInsets.only(
+                                              bottom: MediaQuery.of(context).viewInsets.bottom,
+                                            ),
+                                            child: Container(
+                                              height: MediaQuery.of(context).size.height * 0.75,
+                                              padding: const EdgeInsets.all(20),
+                                              decoration: const BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  /// COMMENTS
+                                                  Expanded(
+                                                    child: StreamBuilder<List<CommentModel>>(
+                                                      stream: contactBlocComment.stream,
+                                                      builder: (context, snapshot) {
+                                                        contactBlocComment.getAllComment();
+                                                        final comments = snapshot.data!;
+                                                        if (comments.isEmpty) {
+                                                          return const Center(
+                                                            child: Text("No comments yet"),
+                                                          );
+                                                        }
+                                                        return ListView.builder(
+                                                          itemCount: comments.length,
+                                                          itemBuilder: (context, index) {
+                                                            final comment = comments[index];
+                                                            return Padding(
+                                                              padding: const EdgeInsets.only(bottom: 12),
+                                                              child: Row(
+                                                                children: [
+                                                                  /// AVATAR
+                                                                  Container(
+                                                                    height: 50,
+                                                                    width: 50,
+                                                                    clipBehavior: Clip.hardEdge,
+                                                                    decoration: BoxDecoration(
+                                                                      borderRadius: BorderRadius.circular(40),
+                                                                    ),
+                                                                    child: Image.asset(
+                                                                      AppImages.profile,
+                                                                      fit: BoxFit.cover,
                                                                     ),
                                                                   ),
-                                                                  subtitle:
-                                                                      Text(
-                                                                        c.text,
-                                                                      ),
-                                                                );
-                                                              },
+                                                                  const SizedBox(width: 10),
+
+                                                                  /// TEXTS
+                                                                  Expanded(
+                                                                    child: Column(
+                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                      children: [
+                                                                        Text(
+                                                                          "Wendy Edwards",
+                                                                          style: AppStyle.agBoldH3(
+                                                                            color: Colors.black,
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          comment.text,
+                                                                          style: AppStyle.agSemiBoldContent(color: Colors.black),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             );
                                                           },
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets.symmetric(
-                                                              horizontal: 16,
-                                                              vertical: 8,
-                                                            ),
-                                                        color: Colors.white,
-                                                        child: Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: TextField(
-                                                                controller:
-                                                                    controller,
-                                                                decoration: const InputDecoration(
-                                                                  hintText:
-                                                                      "Write a comment...",
-                                                                  border:
-                                                                      InputBorder
-                                                                          .none,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            IconButton(
-                                                              icon: Icon(
-                                                                Icons.send,
-                                                              ),
-                                                              onPressed: () async {
-                                                                if (controller
-                                                                    .text
-                                                                    .isEmpty)
-                                                                  return;
-                                                                CommentModel
-                                                                data = CommentModel(
-                                                                  text:
-                                                                      controller
-                                                                          .text,
-                                                                  postId:
-                                                                      post.id!,
-                                                                );
-                                                                await RepositoryComment()
-                                                                    .saveComment(
-                                                                      data,
-                                                                    );
-                                                                await contactBlocComment
-                                                                    .getAllComment();
-                                                                controller
-                                                                    .clear();
-                                                              },
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
+                                                        );
+                                                      },
+                                                    ),
                                                   ),
-                                                ),
-                                              );
-                                            },
+
+                                                  /// INPUT
+                                                  Container(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: TextField(
+                                                            controller: controller,
+                                                            decoration: const InputDecoration(
+                                                              hintText: "Write a comment...",
+                                                              border: InputBorder.none,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        IconButton(
+                                                          icon: const Icon(Icons.send),
+                                                          onPressed: () async {
+                                                            if (controller.text.isEmpty) return;
+
+                                                            final comment = CommentModel(
+                                                              text: controller.text,
+                                                              postId: post.id!,
+                                                            );
+
+                                                            await RepositoryComment().saveComment(comment);
+                                                            contactBlocComment.getAllComment();
+                                                            controller.clear();
+                                                          },
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           );
                                         },
                                       );
@@ -449,7 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     builder: (context, snapshot) {
                                       if (snapshot.hasData) {
                                         final comment = snapshot.data!;
-                                        return Text("${comment[index].id}");
+                                        return Text("${comment.length}");
                                       } else {
                                         return Text("0");
                                       }

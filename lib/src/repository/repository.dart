@@ -16,9 +16,8 @@ class RepositoryChat {
 
 class RepositoryPost {
   DataBaseHelper dataBaseHelper = DataBaseHelper();
-
   Future<int> savePost(PostModel data) => dataBaseHelper.savePost(data);
-  Future<int> deletePost(int id) => dataBaseHelper.deletePost(id);
+  // Future<int> deletePost(int id) => dataBaseHelper.deletePost(id);
   Future<List<PostModel>> getAllPost() => dataBaseHelper.getPost();
 
   Future<int> updateLike(int postId, int newLike) =>
@@ -30,6 +29,6 @@ class RepositoryComment {
   DataBaseHelper dataBaseHelper = DataBaseHelper();
 
   Future<int> saveComment(CommentModel data) => dataBaseHelper.saveComment(data);
-  Future<int> deleteComment(int id) => dataBaseHelper.deleteComment(id);
+  // Future<int> deleteComment(int id) => dataBaseHelper.deleteComment(id);
   Future<List<CommentModel>> getAllComment() => dataBaseHelper.getComment();
 }

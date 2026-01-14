@@ -77,6 +77,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
                             child: Container(
@@ -85,16 +86,16 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                               color: Colors.grey.shade400,
                             ),
                           ),
-                          Gap(20),
-                          const Text("Write a Caption", style: TextStyle(fontWeight: FontWeight.bold)),
-                          Gap(20),
+                          Gap(30),
+                          Text("Write a Caption", style: AppStyle.agBoldH3(color: Colors.black)),
+                          Gap(30),
                           TextField(
                             controller: controller,
                             decoration: const InputDecoration(
                               hintText: "Enter your caption here ...",
                             ),
                           ),
-                          Gap(20),
+                          Gap(150),
                           ButtonWidget(
                             onTap: () {
                               if (controller.text.isEmpty || galleryFile == null) {

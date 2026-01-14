@@ -22,9 +22,6 @@ class DataBaseHelper {
     String dataBasePath = await getDatabasesPath();
     String path = join(dataBasePath, 'walletlist.db');
 
-    // eski DBni o'chirish (dev muhitda)
-    await deleteDatabase(path);
-
     var db = await openDatabase(path, version: 1, onCreate: _onCreate);
     return db;
   }
@@ -83,6 +80,8 @@ class DataBaseHelper {
   }
 
   Future<List<PostModel>> getPost() async {
+    print('object');
+
     var dbClient = await AsosiyDB;
     List<Map> list = await dbClient.rawQuery('SELECT * FROM post');
     List<PostModel> data = [];
@@ -131,7 +130,7 @@ class DataBaseHelper {
 
   Future<List<CommentModel>> getComment() async {
     var dbClient = await AsosiyDB;
-    List<Map> list = await dbClient.rawQuery('SELECT * FROM post');
+    List<Map> list = await dbClient.rawQuery('SELECT * FROM comment');
     List<CommentModel> data = [];
 
     for (int i = 0; i < list.length; i++) {
